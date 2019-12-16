@@ -11,10 +11,16 @@ require "json"
 
 dummy_posts = JSON.parse(RestClient.get("https://jsonplaceholder.typicode.com/posts"))
 
-dummy_posts.each do |post|
+dummy_images = JSON.parse(RestClient.get("https://picsum.photos/v2/list?page=2&limit=100"))
+
+dummy_image_bucket = dummy_images.reduce([]) do |accumulator, image_hash|
+    accumulator << image_hash["id"]
+end
+
+new_posts = dummy_posts.map.with_index do |post, index|
   Post.create(
     title: post["title"],
     content: post["body"],
-    image: "https://picsum.photos/300?random=#{rand}",
+    image: "https://picsum.photos/id/#{dummy_image_bucket[index]}/300"
   )
 end
