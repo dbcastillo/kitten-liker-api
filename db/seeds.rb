@@ -9,9 +9,9 @@
 require "rest-client"
 require "json"
 
-dummy_posts = JSON.parse(RestClient.get("https://jsonplaceholder.typicode.com/posts"))
+dummy_posts = JSON.parse(RestClient.get("https://jsonplaceholder.typicode.com/posts")).take(30)
 
-dummy_images = JSON.parse(RestClient.get("https://picsum.photos/v2/list?page=2&limit=100"))
+dummy_images = JSON.parse(RestClient.get("https://picsum.photos/v2/list?page=2&limit=30"))
 
 dummy_image_bucket = dummy_images.reduce([]) do |accumulator, image_hash|
     accumulator << image_hash["id"]
