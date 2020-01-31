@@ -3,9 +3,9 @@ class PostsController < ApplicationController
 
   # GET /posts
   def index
-    @posts = Post.all.order(created_at: :desc)
+    posts = Post.all.order(created_at: :desc)
 
-    render json: @posts
+    render json: posts
   end
 
   # GET /posts/1
@@ -35,7 +35,9 @@ class PostsController < ApplicationController
 
   # DELETE /posts/1
   def destroy
-    @post.destroy
+  post = set_post
+    post.destroy
+    render json: post
   end
 
   private
